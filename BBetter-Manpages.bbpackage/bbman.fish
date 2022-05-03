@@ -6,4 +6,5 @@ col -bx | read -z manbuffer
 set -l manname (string lower (string match -r '^[^)]+\)' $manbuffer))
 
 # now open bbedit to view the manpage, with the window title
-echo $manbuffer | bbedit --new-window --clean --view-top -m "manpage" -t $manname
+echo $manbuffer |\
+    bbedit --new-window --clean --view-top --pipe-title $manname --language "Manpage"

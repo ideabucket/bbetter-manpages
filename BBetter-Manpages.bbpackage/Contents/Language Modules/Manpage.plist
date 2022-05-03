@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+	"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Identification -->
+	<key>BBEditDocumentType</key>		<string>CodelessLanguageModule</string>
+	<key>BBLMLanguageDisplayName</key>  <string>Manpage</string>
+	<key>BBLMLanguageCode</key>         <string>bman</string>
+
+	<!-- Services -->
+	<key>BBLMIsCaseSensitive</key>		<true/>
+	<key>BBLMScansFunctions</key>       <true/>
+	
+	<!-- Controlling Syntax Coloring -->
+	<key>BBLMColorsSyntax</key>         <true/>
+	
+	<key>Language Features</key>
+	<dict>
+		<key>Identifier and Keyword Character Class</key>
+		<string>A-Za-z</string>
+		<key>Function Pattern</key>
+		<!-- Character at column 1 must be alphanumeric, subsequent ones can be spaces -->
+		<string><![CDATA[
+			(?x:
+				(?P<function>
+					^(?P<function_name>[A-Z][A-Z ]+)\s*$
+				)
+			)
+		]]></string>
+		<key>String Pattern</key>
+		<!--
+		See disclaimers in README.md for the limitations of this pattern,
+		which are substantial.
+		-->
+		<string><![CDATA[
+			(?xm: 
+				(?:^\s*\v) 		(?# a blank line)
+				[ ]{14}.+\v 	(?# followed by a line indented by fourteen spaces)
+				(?: 			(?# followed by any number of: )
+					(?:			(?# EITHER: a line indented by seven spaces, a linebreak,
+									then another line indented by fourteen spaces)
+						^[ ]{7}or|^[ ]{7}and\v
+						[ ]{14}.+\v
+					)
+					|
+					(?:^\s*\v)	(?# OR: a blank line)
+				)+
+			)		
+		]]></string>
+	</dict> 
+</dict>
+</plist>

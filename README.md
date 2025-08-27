@@ -20,22 +20,23 @@ Double-click `BBEtter-Manpages.bbpackage` in the Finder to install. Alternativel
 
 2. A script you can set as your `$MANPAGER` in your shell so manpages open in BBEdit. (In other words: you type `man awk`, you get a BBEdit window with the `awk` manpage in it.) Unsurprisingly, this requires you to have installed the BBEdit command line tools (BBEdit &gt; Install Command Line Tools…).
 
-   To use the script, put the following in your `.bashrc`:
+   To use the script in Bash, put the following in your `.bashrc`; in Zsh, put it in your `.zshenv`:
 
    ```sh
-   if [ -z "$SSH_CONNECTION" ]; then
-       export MANPAGER=<path_to_this_package>/BBetter-Manpages.bbpackage/bbman.sh
+   if [ -z "$SSH_CONNECTION" ]
+   then
+       export MANPAGER="${$(
+         osascript -e 'POSIX path of (path to application support from user domain)'
+       )// /\ }"BBEdit/Packages/BBetter-Manpages.bbpackage/bbman.sh
    fi
    ```
-   
-   In theory this should also work in a `.zshrc` but I haven’t tested it.
 
    If you use fish (like me) instead put the following in `.config/fish/config.fish`:
 
    ```fish
    if status is-interactive
    and test -z $SSH_CONNECTION
-	   set -xg MANPAGER <path_to_this_package>/BBetter-Manpages.bbpackage/bbman.fish
+       set -xg MANPAGER <path_to_this_package>/BBetter-Manpages.bbpackage/bbman.fish
    end
    ```
    
